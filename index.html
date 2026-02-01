@@ -1,60 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Valentine 💘</title>
-  <style>
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      font-family: Arial, sans-serif;
-      text-align: center;
-      color: white;
-    }
-    .box {
-      background: rgba(0,0,0,0.25);
-      padding: 30px;
-      border-radius: 20px;
-    }
-    button {
-      padding: 12px 25px;
-      font-size: 18px;
-      border: none;
-      border-radius: 25px;
-      margin: 10px;
-      cursor: pointer;
-    }
-    #yes {
-      background: #00e676;
-    }
-    #no {
-      background: #ff1744;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Valentine 💘</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.container {
+  text-align: center;
+  background: rgba(0,0,0,0.25);
+  padding: 35px;
+  border-radius: 25px;
+  box-shadow: 0 0 30px rgba(255,255,255,0.3);
+  animation: pop 1s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+h1 {
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#yes {
+  background: #00ff9c;
+}
+
+#no {
+  background: #ff2e63;
+  position: absolute;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  color: rgba(255,255,255,0.7);
+  font-size: 20px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
 </head>
+
 <body>
 
-  <div class="box">
-    <h1>💖 Will you be my Valentine? 💖</h1>
-    <button id="yes" onclick="yesClick()">YES 💕</button>
-    <button id="no" onclick="noClick()">NO 💔</button>
-  </div>
+<div class="container">
+  <h1>💖 Will you be my Valentine, Riya? 💖</h1>
+  <button id="yes" onclick="yesClick()">YES 💕</button>
+  <button id="no" onclick="moveNo()">NO 💔</button>
+</div>
 
-  <script>
-    function yesClick() {
-      document.body.innerHTML = `
-        <h1>🥰 Yayyy! You made my day 💘</h1>
-        <p>You are officially my Valentine ❤️</p>
-      `;
-    }
+<script>
+/* HEART GENERATOR */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random()*20) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 300);
 
-    function noClick() {
-      alert("Try again 😜");
-    }
-  </script>
+/* NO BUTTON ESCAPE */
+const noBtn = document.getElementById("no");
+const messages = [
+  "Try again 😜",
+  "Not allowed ❌😂",
+  "Oops! Missed me 😏",
+  "Hehe not this easy 💘",
+  "Riya think again 🥹"
+];
+
+function moveNo() {
+  alert(messages[Math.floor(Math.random()*messages.length)]);
+  noBtn.style.top = Math.random() * 80 + "vh";
+  noBtn.style.left = Math.random() * 80 + "vw";
+}
+
+/* YES CLICK EFFECT */
+function yesClick() {
+  document.body.innerHTML = `
+    <div style="text-align:center; animation: pop 1s;">
+      <h1 style="font-size:3rem;">😍 YAYYYY RIYA 💘</h1>
+      <p style="font-size:1.5rem;">You just made my heart so happy 💓</p>
+      <p style="font-size:1.2rem;">Officially my Valentine ❤️</p>
+    </div>
+  `;
+
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.innerHTML = "💖";
+    h.style.position = "absolute";
+    h.style.left = Math.random()*100 + "vw";
+    h.style.top = "100vh";
+    h.style.fontSize = "30px";
+    h.style.animation = "float 4s linear";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  }, 150);
+}
+</script>
 
 </body>
 </html>
+
