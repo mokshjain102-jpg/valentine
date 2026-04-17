@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Assistant</title>
+    <style>
+        body {
+            background: #050816;
+            color: white;
+            font-family: Inter;
+        }
+
+        .chat {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        input {
+            width: 70%;
+        }
+
+        button {
+            background: #00ff9f;
+            border: none;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chat">
+        <h2>AI Assistant</h2>
+        <div id="chatBox"></div>
+        <input id="input">
+        <button onclick="send()">Send</button>
+        <button onclick="startVoice()">🎤</button>
+    </div>
+
+    <script>
+        function send() {
+            const input = document.getElementById('input');
+            const chat = document.getElementById('chatBox');
+            chat.innerHTML += `<p>You: ${input.value}</p>`;
+            chat.innerHTML += `<p>AI: Improve irrigation & monitor humidity.</p>`;
+            speechSynthesis.speak(new SpeechSynthesisUtterance("Improve irrigation"));
+            input.value = '';
+        }
+
+        function startVoice() {
+            const rec = new webkitSpeechRecognition();
+            rec.lang = 'hi-IN';
+            rec.onresult = (e) => {
+                document.getElementById('input').value = e.results[0][0].transcript;
+            }
+            rec.start();
+        }
+    </script>
+</body>
+
+</html>
